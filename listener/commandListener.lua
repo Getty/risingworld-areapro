@@ -60,7 +60,7 @@ function onPlayerCommand(event)
 			-- This is a Callback function, so we have to provide a function as parameter
 			-- which is called when the callback is done
 			event.player:enableMarkingSelector(function()
-				event.player:sendYellMessage("Select the area and type \"/createarea [AreaName]\" to save it or \"/createblockarea [BlockID]\" to fill it");
+				event.player:sendYellMessage("Select the area and type \"/createarea [AreaName]\" (short: /ca) to save it \nor \"/createblockarea [BlockID]\" (short: /cba) to fill it with blocks\nor \"/createterrainarea [TerrainType]\" (short: /cta) to fill it with terrain\nor \"/createcleanuparea\" (short: /cca) to clean it up");
 			end);
 			
 		-- Command /createarea to save the area you have defined previously
@@ -292,8 +292,9 @@ function onPlayerCommand(event)
 							area["endBlockpositionX"] = markingEvent.endBlockpositionX;
 							area["endBlockpositionY"] = markingEvent.endBlockpositionY;
 							area["endBlockpositionZ"] = markingEvent.endBlockpositionZ;
+
 							world:setBlockDataInArea(area["startChunkpositionX"], area["startChunkpositionY"], area["startChunkpositionZ"], area["startBlockpositionX"], area["startBlockpositionY"], area["startBlockpositionZ"], area["endChunkpositionX"], area["endChunkpositionY"], area["endChunkpositionZ"], area["endBlockpositionX"], area["endBlockpositionY"], area["endBlockpositionZ"], blockid);
-							event.player:sendTextMessage("[#00FF00]Filled selected successfully with BlockID "..blockid);
+							event.player:sendTextMessage("[#00FF00]Filled selected area successfully with BlockID "..blockid);
 						end
 					end);
 				else
@@ -302,6 +303,68 @@ function onPlayerCommand(event)
 			else
 				event.player:sendTextMessage("[#FF0000]Use /createblockarea [BlockID] [#B0B0B0]");
 			end
+
+		-- Command /createterrainarea
+		elseif ( cmd[1] == "/createterrainarea" or cmd[1] == "/cta" ) then
+
+			if #cmd >= 2 then
+				if StringUtils:isInteger(cmd[2]) then
+					local terraintype = tonumber(cmd[2]);
+					event.player:disableMarkingSelector(function(markingEvent)
+						if markingEvent ~= false then
+							local area = {};
+							area["startChunkpositionX"] = markingEvent.startChunkpositionX;
+							area["startChunkpositionY"] = markingEvent.startChunkpositionY;
+							area["startChunkpositionZ"] = markingEvent.startChunkpositionZ;
+							area["startBlockpositionX"] = markingEvent.startBlockpositionX;
+							area["startBlockpositionY"] = markingEvent.startBlockpositionY;
+							area["startBlockpositionZ"] = markingEvent.startBlockpositionZ;
+
+							area["endChunkpositionX"] = markingEvent.endChunkpositionX;
+							area["endChunkpositionY"] = markingEvent.endChunkpositionY;
+							area["endChunkpositionZ"] = markingEvent.endChunkpositionZ;
+							area["endBlockpositionX"] = markingEvent.endBlockpositionX;
+							area["endBlockpositionY"] = markingEvent.endBlockpositionY;
+							area["endBlockpositionZ"] = markingEvent.endBlockpositionZ;
+
+							world:setTerrainDataInArea(area["startChunkpositionX"], area["startChunkpositionY"], area["startChunkpositionZ"], area["startBlockpositionX"], area["startBlockpositionY"], area["startBlockpositionZ"], area["endChunkpositionX"], area["endChunkpositionY"], area["endChunkpositionZ"], area["endBlockpositionX"], area["endBlockpositionY"], area["endBlockpositionZ"], terraintype);
+							event.player:sendTextMessage("[#00FF00]Filled selected area successfully with TerrainType "..terraintype);
+						end
+					end);
+				else
+					event.player:sendTextMessage("[#FF0000]You must provide a numeric terraintype id");
+				end
+			else
+				event.player:sendTextMessage("[#FF0000]Use /createblockarea [BlockID] [#B0B0B0]");
+			end
+
+		-- Command /createarea to save the area you have defined previously
+		elseif ( cmd[1] == "/createcleanuparea" or cmd[1] == "/cca" ) then
+
+			event.player:disableMarkingSelector(function(markingEvent)
+				if markingEvent ~= false then
+					local area = {};
+					area["startChunkpositionX"] = markingEvent.startChunkpositionX;
+					area["startChunkpositionY"] = markingEvent.startChunkpositionY;
+					area["startChunkpositionZ"] = markingEvent.startChunkpositionZ;
+					area["startBlockpositionX"] = markingEvent.startBlockpositionX;
+					area["startBlockpositionY"] = markingEvent.startBlockpositionY;
+					area["startBlockpositionZ"] = markingEvent.startBlockpositionZ;
+
+					area["endChunkpositionX"] = markingEvent.endChunkpositionX;
+					area["endChunkpositionY"] = markingEvent.endChunkpositionY;
+					area["endChunkpositionZ"] = markingEvent.endChunkpositionZ;
+					area["endBlockpositionX"] = markingEvent.endBlockpositionX;
+					area["endBlockpositionY"] = markingEvent.endBlockpositionY;
+					area["endBlockpositionZ"] = markingEvent.endBlockpositionZ;
+
+					world:removeAllObjectsInArea(area["startChunkpositionX"], area["startChunkpositionY"], area["startChunkpositionZ"], area["startBlockpositionX"], area["startBlockpositionY"], area["startBlockpositionZ"], area["endChunkpositionX"], area["endChunkpositionY"], area["endChunkpositionZ"], area["endBlockpositionX"], area["endBlockpositionY"], area["endBlockpositionZ"]);
+					world:removeAllConstructionsInArea(area["startChunkpositionX"], area["startChunkpositionY"], area["startChunkpositionZ"], area["startBlockpositionX"], area["startBlockpositionY"], area["startBlockpositionZ"], area["endChunkpositionX"], area["endChunkpositionY"], area["endChunkpositionZ"], area["endBlockpositionX"], area["endBlockpositionY"], area["endBlockpositionZ"]);
+					world:removeAllVegetationsInArea(area["startChunkpositionX"], area["startChunkpositionY"], area["startChunkpositionZ"], area["startBlockpositionX"], area["startBlockpositionY"], area["startBlockpositionZ"], area["endChunkpositionX"], area["endChunkpositionY"], area["endChunkpositionZ"], area["endBlockpositionX"], area["endBlockpositionY"], area["endBlockpositionZ"]);
+					world:setBlockDataInArea(area["startChunkpositionX"], area["startChunkpositionY"], area["startChunkpositionZ"], area["startBlockpositionX"], area["startBlockpositionY"], area["startBlockpositionZ"], area["endChunkpositionX"], area["endChunkpositionY"], area["endChunkpositionZ"], area["endBlockpositionX"], area["endBlockpositionY"], area["endBlockpositionZ"], 0);
+					event.player:sendTextMessage("[#00FF00]Cleaned up selected area");
+				end
+			end);
 
 		-- If command was not found, send a notification to the player. Eventually you want to
 		-- remove this line when you are using more than 1 scripts (with different command listeners)
