@@ -64,7 +64,7 @@ function onPlayerCommand(event)
 			end);
 			
 		-- Command /createarea to save the area you have defined previously
-		elseif cmd[1] == "/createarea" then
+		elseif ( cmd[1] == "/createarea" or cmd[1] == "/ca" ) then
 			if #cmd >= 2 then
 				-- Provide a Callback-function, since it can't be triggered immediately, only after we receive the response from the player
 				event.player:disableMarkingSelector(function(markingEvent)

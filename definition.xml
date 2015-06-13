@@ -2,8 +2,8 @@
 	<Name>AreaProtection 1.7-gettypatched</Name>
 	<Description>A script used to define and protect areas</Description>
 	<File>areapro.lua</File>
-	<Author>KingGenius</Author>
-	<Team>JIW-Games</Team>
-	<Website>https://www.rising-world.net</Website>
+	<Author>KingGenius + Getler</Author>
+	<Team></Team>
+	<Website>https://github.com/Getty/risingworld-areapro</Website>
 	<License>MIT</License>
 </Lua-Script>
