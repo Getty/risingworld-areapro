@@ -60,7 +60,13 @@ function onPlayerCommand(event)
 			-- This is a Callback function, so we have to provide a function as parameter
 			-- which is called when the callback is done
 			event.player:enableMarkingSelector(function()
-				event.player:sendYellMessage("Select the area and type \"/createarea [AreaName]\" (short: /ca) to save it \nor \"/createblockarea [BlockID]\" (short: /cba) to fill it with blocks\nor \"/createterrainarea [TerrainType]\" (short: /cta) to fill it with terrain\nor \"/createcleanuparea\" (short: /cca) to clean it up");
+				event.player:sendTextMessage("Select the area and type \"/createarea [AreaName]\" (short: /ca) to save it \nor \"/createblockarea [BlockID]\" (short: /cba) to fill it with blocks\nor \"/createterrainarea [TerrainType]\" (short: /cta) to fill it with terrain\nor \"/createcleanuparea\" (short: /cca) to clean it up\nor \"/cancelselectarea\" (short: /csa) to stop select");
+			end);
+
+		-- Command /selectarea
+		elseif ( cmd[1] == "/cancelselectarea" or cmd[1] == "/csa" ) then
+			event.player:disableMarkingSelector(function(markingEvent)
+				event.player:sendTextMessage("[#FF0000]Cancelled select area");
 			end);
 			
 		-- Command /createarea to save the area you have defined previously
