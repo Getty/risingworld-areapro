@@ -51,7 +51,7 @@ function onPlayerCommand(event)
 
 		-- All following commands are only usable when the player is an admin!
 		if event.player:isAdmin() == false then
-			event.player:sendTextMessage("[#FF0000]You are not an admin");
+		  -- event.player:sendTextMessage("[#FF0000]You are not an admin");
 			return;
 		end
 		
@@ -375,7 +375,8 @@ function onPlayerCommand(event)
 		-- If command was not found, send a notification to the player. Eventually you want to
 		-- remove this line when you are using more than 1 scripts (with different command listeners)
 		else
-			event.player:sendTextMessage("[#B0B0B0]Unknown command");
+			-- Yeah, load 2 plugins and you get annoyed by that shit ;)
+			-- event.player:sendTextMessage("[#B0B0B0]Unknown command");
 		end
 	end
 end

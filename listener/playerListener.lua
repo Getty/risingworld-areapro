@@ -20,17 +20,18 @@ addEvent("PlayerConnect", onPlayerConnect);
 -- display some information on the player screen for example.
 -- @param event The event object
 function onPlayerSpawn(event)
-	-- Creates a new GUI element (label) displaying the servername on the player's screen
-	local label = Gui:createLabel("Welcome to ".. server:getServerName(), 0.98, 0.135);
-	label:setFontColor(0x0066FFFF);
-	label:setFontsize(26);
-	label:setPivot(1);
-	event.player:addGuiElement(label);
-	-- Creates a new timer which triggers the provided function after the given amount of time
-	setTimer(function()
-		event.player:removeGuiElement(label);
-		Gui:destroyElement(label);
-	end, 5, 1);
+  -- Just one plugin should welcome
+	-- -- Creates a new GUI element (label) displaying the servername on the player's screen
+	-- local label = Gui:createLabel("Welcome to ".. server:getServerName(), 0.98, 0.135);
+	-- label:setFontColor(0x0066FFFF);
+	-- label:setFontsize(26);
+	-- label:setPivot(1);
+	-- event.player:addGuiElement(label);
+	-- -- Creates a new timer which triggers the provided function after the given amount of time
+	-- setTimer(function()
+	-- 	event.player:removeGuiElement(label);
+	-- 	Gui:destroyElement(label);
+	-- end, 5, 1);
 end
 addEvent("PlayerSpawn", onPlayerSpawn);
 
